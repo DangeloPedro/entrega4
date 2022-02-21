@@ -1,0 +1,27 @@
+library(tidyverse)
+library(ggplot2)
+library(sf)
+library(geobr)
+library(basedosdados)
+
+metadata<-download_metadata() # para ver codigos
+head(metadata)
+
+sp_mun <- read_municipality(code_muni=35, year=2018)
+
+set_billing_id("projeto-ciencia-de-dados-2022")
+query <- bdplyr("br_sp_gov_ssp.ocorrencias_registradas")
+OR <- bd_collect(query)
+colnames(OR)[3] = 'code_muni'
+
+a = merge(sp_mun, OR)
+
+a = filter(a, ano == 2018, mes == 2)%>%
+  filter( !regiao_ssp %in% c('Capital', 'Grande São Paulo (exclui a Capital)' ))
+
+ggplot()+
+  geom_sf(data = a, aes(fill= furto_outros),alpha=0.8,col="white")
+
+
+
+

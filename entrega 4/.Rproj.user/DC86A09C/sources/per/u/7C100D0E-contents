@@ -1,0 +1,40 @@
+[14:47, 21/02/2022] Guilherme Luz: my_rast = rast('brasil_coverage_2020.tif') #file path
+
+#plot(my_rast)
+
+# how many layers?
+nlyr(my_rast)
+
+## GeoBR ##
+# Read at a given year
+mun <- read_municipality(code_muni="RJ", year=2020)
+mun_code = mun %>% select(code_muni, geom) %>% vect()
+
+# crop
+cropped = crop(my_rast, mun_code)
+
+#mask
+masked = mask(cropped, mun_code)
+
+# extracting data from raster
+extraction = terra::extract(masked, mun_code)
+
+# take the mean by municipality
+cobertura_media = extraction %>%
+  group_by(ID) %>%
+  summarise(cobertura_municipio = mean(brasil_coverage_2020))
+
+# back to shapefile
+mun_cobertura_media = mun %>%
+  mutate(ID = seq_len(nrow(.))) %>%  #define ID
+  left_join( cobertura_media, by = "ID") #merge by ID
+
+# plot
+ggplot(mun_cobertura_media) +
+  geom_sf(aes(fill = cobertura_municipio) ) +
+  scale_fill_distiller(type = 'seq', palette = 'Greens', 
+                       direction = -1)+
+  theme_classic()+
+  labs(title = 'Cobertura Vegetal média por município',
+       caption = 'Mapa de municípios do estado do Rio de Janeiro', 
+       fill = 'Cobertura vegetal')

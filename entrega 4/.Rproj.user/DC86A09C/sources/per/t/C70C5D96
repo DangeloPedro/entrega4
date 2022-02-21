@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1645450213780.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "258558585",
+    "id" : "C70C5D96",
+    "lastKnownWriteTime" : 1645473480,
+    "last_content_update" : 1645473480728,
+    "path" : "~/PUCRIO/Verão/Estatística/Aulas de Data Science/Entregas data science/entrega 4/entrega 4/script_entrega4.R",
+    "project_path" : "script_entrega4.R",
+    "properties" : {
+        "cursorPosition" : "46,16",
+        "scrollLine" : "45",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
